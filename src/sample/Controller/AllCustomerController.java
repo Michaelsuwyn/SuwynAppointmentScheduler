@@ -76,7 +76,21 @@ public class AllCustomerController implements Initializable {
         stage.show();
     }
 
-    public void editCustomer(ActionEvent actionEvent) {
+    public void editCustomer(ActionEvent actionEvent) throws IOException {
+        if(allCustomers.getSelectionModel().getSelectedItem() != null){
+            selectedCustomer = (CustomerReceiver) allCustomers.getSelectionModel().getSelectedItem();
+
+            Parent root = FXMLLoader.load(getClass().getResource("../View/EditCustomer.fxml"));
+            Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+            Scene scene = new Scene(root, 600, 600);
+            stage.setTitle("Edit Customer");
+            stage.setScene(scene);
+            stage.show();
+        }
+        else {
+            Alert noSelection = new Alert(Alert.AlertType.ERROR, "Please select a customer to edit");
+            Optional<ButtonType> result = noSelection.showAndWait();
+        }
     }
 
     public void deleteCustomer(ActionEvent actionEvent) throws SQLException, IOException {
@@ -87,6 +101,10 @@ public class AllCustomerController implements Initializable {
             if(result.isPresent() && result.get() == ButtonType.OK){
                 selectedCustomer = (CustomerReceiver) allCustomers.getSelectionModel().getSelectedItem();
                 CustomerDAO.deleteByID(selectedCustomer.getCustomerReceiverID());
+
+                Alert deleteAlert = new Alert(Alert.AlertType.INFORMATION, "Customer has been deleted");
+                Optional<ButtonType> deleteResult = deleteAlert.showAndWait();
+
                 Parent root = FXMLLoader.load(getClass().getResource("../View/AllCustomers.fxml"));
                 Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
                 Scene scene = new Scene(root, 800, 600);

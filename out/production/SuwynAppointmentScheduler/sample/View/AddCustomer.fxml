@@ -8,7 +8,7 @@
 <?import javafx.scene.text.Font?>
 
 
-<AnchorPane prefHeight="449.0" prefWidth="650.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller.AddCustomerController">
+<AnchorPane prefHeight="498.0" prefWidth="686.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller.AddCustomerController">
    <children>
       <Label layoutX="14.0" layoutY="26.0" text="Add Customer">
          <font>
@@ -28,5 +28,6 @@
       <Label layoutX="4.0" layoutY="332.0" text="State / Province" />
       <Label layoutX="4.0" layoutY="278.0" text="Country" />
       <Button layoutX="31.0" layoutY="398.0" mnemonicParsing="false" onAction="#submitCustomer" text="Submit" />
+      <Button layoutX="281.0" layoutY="31.0" mnemonicParsing="false" onAction="#toAllCustomers" text="Back" />
    </children>
 </AnchorPane>

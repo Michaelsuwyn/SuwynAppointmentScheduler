@@ -34,12 +34,12 @@ public class AddCustomerController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         try {
-            ResultSet countriesSet = CountryDAO.selectAll();
-            while(countriesSet.next()){
-                countryCombo.getItems().add(countriesSet.getString(2));
-            }
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
+                ResultSet countriesSet = CountryDAO.selectAll();
+                while(countriesSet.next()){
+                    countryCombo.getItems().add(countriesSet.getString(2));
+                }
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
         }
 
     }
@@ -73,5 +73,14 @@ public class AddCustomerController implements Initializable {
             stage.setScene(scene);
             stage.show();
         }
+    }
+
+    public void toAllCustomers(ActionEvent actionEvent) throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("../View/AllCustomers.fxml"));
+        Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+        Scene scene = new Scene(root, 800, 600);
+        stage.setTitle("Customers");
+        stage.setScene(scene);
+        stage.show();
     }
 }
