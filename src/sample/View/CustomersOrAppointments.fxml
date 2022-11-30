@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller.CustomersOrAppointmentsController">
+   <children>
+      <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="93.0" layoutY="125.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../Images/CustomersImage.PNG" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="327.0" layoutY="125.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../Images/AppointmentsImage.PNG" />
+         </image>
+      </ImageView>
+      <Button layoutX="127.0" layoutY="300.0" mnemonicParsing="false" onAction="#toCustomers" text="Customers" />
+      <Button layoutX="345.0" layoutY="300.0" mnemonicParsing="false" text="Appointments" />
+   </children>
+</AnchorPane>
