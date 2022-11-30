@@ -8,6 +8,8 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -16,10 +18,12 @@ import sample.DAO.CustomerDAO;
 import sample.Model.Customer;
 import sample.Model.CustomerReceiver;
 
+import javax.swing.text.html.Option;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class AllCustomerController implements Initializable {
@@ -30,6 +34,7 @@ public class AllCustomerController implements Initializable {
     public TableColumn customerPostalField;
     public TableColumn customerDivisionField;
     public TableColumn customerPhoneField;
+    public static CustomerReceiver selectedCustomer;
     public ObservableList<CustomerReceiver> allCustomerList = FXCollections.observableArrayList();
 
 
@@ -69,5 +74,30 @@ public class AllCustomerController implements Initializable {
         stage.setTitle("Add Customer");
         stage.setScene(scene);
         stage.show();
+    }
+
+    public void editCustomer(ActionEvent actionEvent) {
+    }
+
+    public void deleteCustomer(ActionEvent actionEvent) throws SQLException, IOException {
+        if(allCustomers.getSelectionModel().getSelectedItem() != null){
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure you want to delete?");
+            Optional<ButtonType> result = alert.showAndWait();
+
+            if(result.isPresent() && result.get() == ButtonType.OK){
+                selectedCustomer = (CustomerReceiver) allCustomers.getSelectionModel().getSelectedItem();
+                CustomerDAO.deleteByID(selectedCustomer.getCustomerReceiverID());
+                Parent root = FXMLLoader.load(getClass().getResource("../View/AllCustomers.fxml"));
+                Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+                Scene scene = new Scene(root, 800, 600);
+                stage.setTitle("Customers");
+                stage.setScene(scene);
+                stage.show();
+            }
+        }
+        else {
+            Alert noSelection = new Alert(Alert.AlertType.ERROR, "No Customer has been selected");
+            Optional<ButtonType> result = noSelection.showAndWait();
+        }
     }
 }

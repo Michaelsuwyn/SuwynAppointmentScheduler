@@ -21,13 +21,32 @@ public class CustomerDAO {
             System.out.println(userName);
         }
     }
-    //Test to see if it is working
     public static ResultSet selectAllCustomersWithFirstDivision() throws SQLException {
         ObservableList<Customer> allCustomers = FXCollections.observableArrayList();
         String sql = "SELECT * FROM customers LEFT JOIN first_level_divisions ON customers.Division_ID = first_level_divisions.Division_ID";
         PreparedStatement ps = JDBC.getConnection().prepareStatement(sql);
         ResultSet rs = ps.executeQuery();
         return rs;
+    }
+
+    public static int insertCustomer(String customerName, String address, String postal, String phone, int divisionID) throws SQLException {
+        String sql = "INSERT INTO customers (Customer_Name, Address, Postal_Code, Phone, Division_ID) VALUES (?,?,?,?,?)";
+        PreparedStatement ps = JDBC.getConnection().prepareStatement(sql);
+        ps.setString(1, customerName);
+        ps.setString(2, address);
+        ps.setString(3, postal);
+        ps.setString(4, phone);
+        ps.setInt(5, divisionID);
+        int rowsAffected = ps.executeUpdate();
+        return rowsAffected;
+    }
+
+    public static int deleteByID(int customerID) throws SQLException {
+        String sql = "DELETE FROM customers WHERE Customer_ID = ?";
+        PreparedStatement ps = JDBC.getConnection().prepareStatement(sql);
+        ps.setInt(1, customerID);
+        int rowsAffected = ps.executeUpdate();
+        return rowsAffected;
     }
 }
 
