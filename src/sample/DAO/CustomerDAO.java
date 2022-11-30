@@ -48,6 +48,19 @@ public class CustomerDAO {
         int rowsAffected = ps.executeUpdate();
         return rowsAffected;
     }
+
+    public static int updateCustomer(int customerID, String customerName, String address, String postalCode, String phone, int divisionID) throws SQLException {
+        String sql = "UPDATE customers SET Customer_Name = ?, Address = ?, Postal_Code =?, Phone = ?, Division_ID = ? WHERE Customer_ID = ? ";
+        PreparedStatement ps = JDBC.getConnection().prepareStatement(sql);
+        ps.setString(1, customerName);
+        ps.setString(2, address);
+        ps.setString(3, postalCode);
+        ps.setString(4, phone);
+        ps.setInt(5, divisionID);
+        ps.setInt(6, customerID);
+        int rowsAffected = ps.executeUpdate();
+        return rowsAffected;
+    }
 }
 
 

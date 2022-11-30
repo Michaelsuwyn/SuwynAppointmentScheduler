@@ -6,10 +6,13 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import sample.DAO.CountryDAO;
+import sample.DAO.CustomerDAO;
 import sample.DAO.FirstLevelDivisionDAO;
 import sample.Model.Customer;
 import sample.Model.CustomerReceiver;
@@ -18,6 +21,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class EditCustomerController implements Initializable {
@@ -32,8 +36,7 @@ public class EditCustomerController implements Initializable {
     int country_id = 0;
 
 
-    public void updateCustomer(ActionEvent actionEvent) {
-    }
+
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -112,5 +115,23 @@ public class EditCustomerController implements Initializable {
         while(divisionsSet.next()){
             editCustomerDivision.getItems().add(divisionsSet.getString(2));
         }
+    }
+
+    public void updateCustomer(ActionEvent actionEvent) throws SQLException, IOException {
+        ResultSet firstLevelSet = FirstLevelDivisionDAO.getFirstLevelByName(editCustomerDivision.getValue().toString());
+        if(firstLevelSet.next()){
+            CustomerDAO.updateCustomer(Integer.parseInt(editCustomerID.getText()), editCustomerName.getText().toString(), editCustomerAddress.getText().toString(), editCustomerPostal.getText().toString(), editCustomerPhone.getText().toString(), firstLevelSet.getInt(1));
+
+            Alert alert = new Alert(Alert.AlertType.INFORMATION, "Customer has been updated");
+            Optional<ButtonType> result = alert.showAndWait();
+
+            Parent root = FXMLLoader.load(getClass().getResource("../View/AllCustomers.fxml"));
+            Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+            Scene scene = new Scene(root, 800, 600);
+            stage.setTitle("Customers");
+            stage.setScene(scene);
+            stage.show();
+        }
+
     }
 }
