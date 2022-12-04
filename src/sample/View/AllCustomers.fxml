@@ -21,5 +21,6 @@
       <Button fx:id="addCustomer" layoutX="20.0" layoutY="410.0" mnemonicParsing="false" onAction="#toAddCustomer" text="Add Customer" />
       <Button layoutX="487.0" layoutY="410.0" mnemonicParsing="false" onAction="#editCustomer" text="Edit Customer" />
       <Button layoutX="627.0" layoutY="410.0" mnemonicParsing="false" onAction="#deleteCustomer" text="Delete Customer" />
+      <Button layoutX="20.0" layoutY="55.0" mnemonicParsing="false" onAction="#toAppOrCustomer" text="Back" />
    </children>
 </AnchorPane>

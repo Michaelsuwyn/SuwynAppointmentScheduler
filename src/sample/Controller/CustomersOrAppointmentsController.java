@@ -18,4 +18,14 @@ public class CustomersOrAppointmentsController {
         stage.setScene(scene);
         stage.show();
     }
+
+
+    public void toAppointments(ActionEvent actionEvent) throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("../View/AllAppointments.fxml"));
+        Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+        Scene scene = new Scene(root, 1100, 800);
+        stage.setTitle("Appointments");
+        stage.setScene(scene);
+        stage.show();
+    }
 }

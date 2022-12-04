@@ -44,7 +44,7 @@ public class AllCustomerController implements Initializable {
             ResultSet rs = CustomerDAO.selectAllCustomersWithFirstDivision();
 
             while(rs.next()){
-                Integer ID = rs.getInt(1);
+                int ID = rs.getInt(1);
                 String Name = rs.getString(2);
                 String Address = rs.getString(3);
                 String Postal = rs.getString(4);
@@ -117,5 +117,14 @@ public class AllCustomerController implements Initializable {
             Alert noSelection = new Alert(Alert.AlertType.ERROR, "No Customer has been selected");
             Optional<ButtonType> result = noSelection.showAndWait();
         }
+    }
+
+    public void toAppOrCustomer(ActionEvent actionEvent) throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("../View/CustomersOrAppointments.fxml"));
+        Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+        Scene scene = new Scene(root, 600, 600);
+        stage.setTitle("Customers or Appointments");
+        stage.setScene(scene);
+        stage.show();
     }
 }

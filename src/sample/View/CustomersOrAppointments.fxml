@@ -19,6 +19,6 @@
          </image>
       </ImageView>
       <Button layoutX="127.0" layoutY="300.0" mnemonicParsing="false" onAction="#toCustomers" text="Customers" />
-      <Button layoutX="345.0" layoutY="300.0" mnemonicParsing="false" text="Appointments" />
+      <Button layoutX="345.0" layoutY="300.0" mnemonicParsing="false" onAction="#toAppointments" text="Appointments" />
    </children>
 </AnchorPane>
