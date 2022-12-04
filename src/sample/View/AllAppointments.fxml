@@ -5,7 +5,7 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="739.0" prefWidth="1112.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller.AllAppointmentsController">
+<AnchorPane prefHeight="739.0" prefWidth="1112.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller.AllAppointmentsController">
    <children>
       <TableView fx:id="allAppointmentsTable" layoutX="14.0" layoutY="55.0" prefHeight="539.0" prefWidth="1003.0">
         <columns>
@@ -21,7 +21,7 @@
             <TableColumn fx:id="appUserID" minWidth="0.0" prefWidth="64.0" text="User ID" />
         </columns>
       </TableView>
-      <Button layoutX="22.0" layoutY="613.0" mnemonicParsing="false" text="Add Appointment" />
+      <Button layoutX="22.0" layoutY="613.0" mnemonicParsing="false" onAction="#toAddAppointment" text="Add Appointment" />
       <Button layoutX="893.0" layoutY="613.0" mnemonicParsing="false" text="Delete Appointment" />
       <Button layoutX="721.0" layoutY="613.0" mnemonicParsing="false" text="Edit Appointment" />
       <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#toAppOrCustomer" text="Back" />

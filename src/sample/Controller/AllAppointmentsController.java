@@ -121,4 +121,14 @@ public class AllAppointmentsController implements Initializable {
         sdf.setTimeZone(TimeZone.getTimeZone(timezone));
         return sdf.format(calendar.getTime());
     }
+
+
+    public void toAddAppointment(ActionEvent actionEvent) throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("../View/AddAppointment.fxml"));
+        Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+        Scene scene = new Scene(root, 600, 600);
+        stage.setTitle("Add Appointment");
+        stage.setScene(scene);
+        stage.show();
+    }
 }
