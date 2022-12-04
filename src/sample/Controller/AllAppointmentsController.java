@@ -20,12 +20,10 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.Instant;
-import java.time.LocalDateTime;
-import java.time.OffsetDateTime;
-import java.time.ZoneId;
+import java.time.*;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.ResourceBundle;
@@ -45,6 +43,9 @@ public class AllAppointmentsController implements Initializable {
     public ObservableList<Appointment> allAppointmentList = FXCollections.observableArrayList();
     public TableView allAppointmentsTable;
     public String contact;
+    public SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+    public ZoneId zoneID = ZoneId.systemDefault();
+
 
 
     @Override
@@ -64,6 +65,8 @@ public class AllAppointmentsController implements Initializable {
                 int CustomerID = rs.getInt(12);
                 int UserID = rs.getInt(13);
 
+                String localStartTime = convertDateTime(Start, zoneID.toString());
+                String localEndTime = convertDateTime(End, zoneID.toString());
 
                 if(ContactID == 1){
                     contact = "Anika Costa";
@@ -75,11 +78,11 @@ public class AllAppointmentsController implements Initializable {
                     contact = "Li Lee";
                 }
 
-                Appointment appointment = new Appointment(ID, Title, Description, Location, Type, Start, End, CustomerID, UserID, contact);
+                Appointment appointment = new Appointment(ID, Title, Description, Location, Type, localStartTime, localEndTime, CustomerID, UserID, contact);
                 allAppointmentList.add(appointment);
             }
 
-        } catch (SQLException throwables) {
+        } catch (SQLException | ParseException throwables) {
             throwables.printStackTrace();
         }
 
@@ -105,5 +108,17 @@ public class AllAppointmentsController implements Initializable {
         stage.setTitle("Customers or Appointments");
         stage.setScene(scene);
         stage.show();
+    }
+
+    public static String convertDateTime(String dt, String timezone) throws ParseException {
+        SimpleDateFormat sdfOriginal = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        sdfOriginal.setTimeZone(TimeZone.getTimeZone("UTC"));
+        Date date1 = sdfOriginal.parse(dt);
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date1);
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        sdf.setTimeZone(TimeZone.getTimeZone(timezone));
+        return sdf.format(calendar.getTime());
     }
 }

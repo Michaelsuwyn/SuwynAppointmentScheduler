@@ -11,7 +11,7 @@
       <TextField fx:id="userName" layoutX="226.0" layoutY="152.0" promptText="UserName" />
       <TextField fx:id="passWord" layoutX="226.0" layoutY="200.0" promptText="Password" />
       <Button fx:id="logIn" layoutX="274.0" layoutY="269.0" mnemonicParsing="false" onAction="#logIn" text="Log In" />
-      <Label layoutX="124.0" layoutY="69.0" text="Suwyn Appointment Scheduler">
+      <Label fx:id="loginTitle" layoutX="124.0" layoutY="69.0" text="Suwyn Appointment Scheduler">
          <font>
             <Font size="26.0" />
          </font>
@@ -21,5 +21,6 @@
             <Font size="18.0" />
          </font>
       </Label>
+      <Label fx:id="locationLabel" layoutX="40.0" layoutY="34.0" />
    </children>
 </AnchorPane>

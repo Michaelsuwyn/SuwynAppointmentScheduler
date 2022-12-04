@@ -5,7 +5,6 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-
 <AnchorPane prefHeight="739.0" prefWidth="1112.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller.AllAppointmentsController">
    <children>
       <TableView fx:id="allAppointmentsTable" layoutX="14.0" layoutY="55.0" prefHeight="539.0" prefWidth="1003.0">
@@ -16,9 +15,9 @@
             <TableColumn fx:id="appLocation" prefWidth="73.0" text="Location" />
             <TableColumn fx:id="appContact" prefWidth="98.0" text="Contact" />
             <TableColumn fx:id="appType" prefWidth="96.0" text="Type" />
-            <TableColumn fx:id="appStart" prefWidth="152.0" text="Start" />
-            <TableColumn fx:id="appEnd" minWidth="0.0" prefWidth="179.0" text="End" />
-            <TableColumn fx:id="appCustomerID" minWidth="0.0" prefWidth="59.0" text="Customer ID" />
+            <TableColumn fx:id="appStart" prefWidth="133.0" text="Start" />
+            <TableColumn fx:id="appEnd" minWidth="0.0" prefWidth="158.0" text="End" />
+            <TableColumn fx:id="appCustomerID" minWidth="0.0" prefWidth="99.0" text="Customer ID" />
             <TableColumn fx:id="appUserID" minWidth="0.0" prefWidth="64.0" text="User ID" />
         </columns>
       </TableView>
