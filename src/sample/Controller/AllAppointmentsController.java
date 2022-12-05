@@ -8,6 +8,8 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -24,10 +26,7 @@ import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.*;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.ResourceBundle;
-import java.util.TimeZone;
+import java.util.*;
 
 public class AllAppointmentsController implements Initializable {
     public TableColumn appID;
@@ -45,6 +44,7 @@ public class AllAppointmentsController implements Initializable {
     public String contact;
     public SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     public ZoneId zoneID = ZoneId.systemDefault();
+    public static Appointment selectedAppointment;
 
 
 
@@ -130,5 +130,32 @@ public class AllAppointmentsController implements Initializable {
         stage.setTitle("Add Appointment");
         stage.setScene(scene);
         stage.show();
+    }
+
+    public void deleteAppt(ActionEvent actionEvent) throws SQLException, IOException {
+        if(allAppointmentsTable.getSelectionModel().getSelectedItem() != null){
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure you want to delete?");
+            Optional<ButtonType> result = alert.showAndWait();
+
+            if(result.isPresent() && result.get() == ButtonType.OK){
+                selectedAppointment = (Appointment) allAppointmentsTable.getSelectionModel().getSelectedItem();
+                AppointmentDAO.deleteByID(selectedAppointment.getAppointmentID());
+
+                Alert deleteAlert = new Alert(Alert.AlertType.INFORMATION, "Appointment has been deleted");
+                Optional<ButtonType> deleteResult = deleteAlert.showAndWait();
+
+                Parent root = FXMLLoader.load(getClass().getResource("../View/AllAppointments.fxml"));
+                Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+                Scene scene = new Scene(root, 1100, 800);
+                stage.setTitle("Customers");
+                stage.setScene(scene);
+                stage.show();
+            }
+
+        }
+        else {
+            Alert noSelection = new Alert(Alert.AlertType.ERROR, "No Appointment has been selected");
+            Optional<ButtonType> result = noSelection.showAndWait();
+        }
     }
 }

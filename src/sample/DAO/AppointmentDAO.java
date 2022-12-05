@@ -29,4 +29,12 @@ public class AppointmentDAO {
         return rowsAffected;
 
     }
+
+    public static int deleteByID(int apptID) throws SQLException {
+        String sql = "DELETE FROM appointments WHERE Appointment_ID = ?";
+        PreparedStatement ps = JDBC.getConnection().prepareStatement(sql);
+        ps.setInt(1, apptID);
+        int rowsAffected = ps.executeUpdate();
+        return rowsAffected;
+    }
 }
