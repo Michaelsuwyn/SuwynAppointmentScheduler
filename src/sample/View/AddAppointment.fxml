@@ -38,5 +38,6 @@
       <ComboBox fx:id="endTimeCombo" layoutX="93.0" layoutY="417.0" prefWidth="150.0" />
       <Label layoutX="12.0" layoutY="324.0" text="Start Time" />
       <Label layoutX="15.0" layoutY="421.0" text="End Time" />
+      <Button layoutX="20.0" layoutY="483.0" mnemonicParsing="false" onAction="#submitAppointment" text="Submit" />
    </children>
 </AnchorPane>
