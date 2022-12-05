@@ -141,7 +141,7 @@ public class AllAppointmentsController implements Initializable {
                 selectedAppointment = (Appointment) allAppointmentsTable.getSelectionModel().getSelectedItem();
                 AppointmentDAO.deleteByID(selectedAppointment.getAppointmentID());
 
-                Alert deleteAlert = new Alert(Alert.AlertType.INFORMATION, "Appointment has been deleted");
+                Alert deleteAlert = new Alert(Alert.AlertType.INFORMATION, "Appointment has been deleted \n Details: \n Appointment ID - " + selectedAppointment.getAppointmentID() + "\n Appointment Type - " + selectedAppointment.getType());
                 Optional<ButtonType> deleteResult = deleteAlert.showAndWait();
 
                 Parent root = FXMLLoader.load(getClass().getResource("../View/AllAppointments.fxml"));

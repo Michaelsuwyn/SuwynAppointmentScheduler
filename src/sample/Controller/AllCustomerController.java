@@ -14,6 +14,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
+import sample.DAO.AppointmentDAO;
 import sample.DAO.CustomerDAO;
 import sample.Model.Customer;
 import sample.Model.CustomerReceiver;
@@ -100,17 +101,25 @@ public class AllCustomerController implements Initializable {
 
             if(result.isPresent() && result.get() == ButtonType.OK){
                 selectedCustomer = (CustomerReceiver) allCustomers.getSelectionModel().getSelectedItem();
-                CustomerDAO.deleteByID(selectedCustomer.getCustomerReceiverID());
+                ResultSet customerAppointments = AppointmentDAO.selectByCustomerID(selectedCustomer.getCustomerReceiverID());
+                if(customerAppointments.next()){
+                    Alert apptError = new Alert(Alert.AlertType.ERROR, "Customer still has scheduled appointments");
+                    Optional<ButtonType> apptErrorResult = apptError.showAndWait();
+                }
+                else {
+                    CustomerDAO.deleteByID(selectedCustomer.getCustomerReceiverID());
 
-                Alert deleteAlert = new Alert(Alert.AlertType.INFORMATION, "Customer has been deleted");
-                Optional<ButtonType> deleteResult = deleteAlert.showAndWait();
+                    Alert deleteAlert = new Alert(Alert.AlertType.INFORMATION, "Customer has been deleted");
+                    Optional<ButtonType> deleteResult = deleteAlert.showAndWait();
 
-                Parent root = FXMLLoader.load(getClass().getResource("../View/AllCustomers.fxml"));
-                Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-                Scene scene = new Scene(root, 800, 600);
-                stage.setTitle("Customers");
-                stage.setScene(scene);
-                stage.show();
+                    Parent root = FXMLLoader.load(getClass().getResource("../View/AllCustomers.fxml"));
+                    Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+                    Scene scene = new Scene(root, 800, 600);
+                    stage.setTitle("Customers");
+                    stage.setScene(scene);
+                    stage.show();
+                }
+
             }
         }
         else {
