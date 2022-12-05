@@ -37,4 +37,23 @@ public class AppointmentDAO {
         int rowsAffected = ps.executeUpdate();
         return rowsAffected;
     }
+
+    public static int updateAppointment(int apptID, String title, String description, String location, String type, String startDate, String endDate, int customerID, int userID, int contactID) throws SQLException {
+        String sql = "UPDATE appointments SET Title = ?, Description = ?, Location = ?, Type = ?, Start = ?, End = ?, Customer_ID = ?, User_ID = ?, Contact_ID = ? WHERE Appointment_ID = ?";
+        PreparedStatement ps = JDBC.getConnection().prepareStatement(sql);
+        ps.setString(1, title);
+        ps.setString(2, description);
+        ps.setString(3, location);
+        ps.setString(4, type);
+        ps.setString(5, startDate);
+        ps.setString(6, endDate);
+        ps.setInt(7, customerID);
+        ps.setInt(8, userID);
+        ps.setInt(9, contactID);
+        ps.setInt(10, apptID);
+        int rowsAffected = ps.executeUpdate();
+        return rowsAffected;
+
+    }
 }
+
