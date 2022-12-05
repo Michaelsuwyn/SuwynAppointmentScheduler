@@ -158,4 +158,22 @@ public class AllAppointmentsController implements Initializable {
             Optional<ButtonType> result = noSelection.showAndWait();
         }
     }
+
+    public void toEditAppointment(ActionEvent actionEvent) throws IOException {
+        if(allAppointmentsTable.getSelectionModel().getSelectedItem() != null){
+            selectedAppointment = (Appointment) allAppointmentsTable.getSelectionModel().getSelectedItem();
+
+            Parent root = FXMLLoader.load(getClass().getResource("../View/EditAppointment.fxml"));
+            Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+            Scene scene = new Scene(root, 800, 800);
+            stage.setTitle("Edit Appointment");
+            stage.setScene(scene);
+            stage.show();
+        }
+        else {
+            Alert noSelection = new Alert(Alert.AlertType.ERROR, "Please select an appointment to edit");
+            Optional<ButtonType> result = noSelection.showAndWait();
+        }
+    }
 }
+
