@@ -27,4 +27,13 @@ public class UserDAO {
         }
         return false;
     }
+
+    public static ResultSet loginData(String name, String pass) throws SQLException {
+        String sql = "SELECT * FROM users WHERE User_Name = ? AND Password = ?";
+        PreparedStatement ps = JDBC.getConnection().prepareStatement(sql);
+        ps.setString(1, name);
+        ps.setString(2, pass);
+        ResultSet rs = ps.executeQuery();
+        return rs;
+    }
 }

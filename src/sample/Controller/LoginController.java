@@ -12,9 +12,11 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import sample.DAO.CustomerDAO;
 import sample.DAO.UserDAO;
+import sample.Model.User;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.ZoneId;
 import java.util.Locale;
@@ -30,6 +32,9 @@ public class LoginController implements Initializable {
     public String language;
     public String locationText = "Location: ";
     public Label loginTitle;
+    public static int loggedInUserID;
+    public static String loggedInUserName;
+    public static boolean firstLogin = false;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -51,7 +56,12 @@ public class LoginController implements Initializable {
     public void logIn(ActionEvent actionEvent) throws SQLException, IOException {
         String name = userName.getText().toString();
         String pass = passWord.getText().toString();
-        if(UserDAO.login(name, pass)){
+        ResultSet loginData = UserDAO.loginData(name, pass);
+        if(loginData.next()){
+
+            loggedInUserID = loginData.getInt(1);
+            loggedInUserName = loginData.getString(2);
+
             Parent root = FXMLLoader.load(getClass().getResource("../View/CustomersOrAppointments.fxml"));
             Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
             Scene scene = new Scene(root, 600, 600);
@@ -59,6 +69,9 @@ public class LoginController implements Initializable {
             stage.setScene(scene);
             stage.show();
         }
+//        if(UserDAO.login(name, pass)){
+//
+//        }
         else {
             if(language =="fr"){
                 invalidMessage.setText("Les informations d'identification invalides");
