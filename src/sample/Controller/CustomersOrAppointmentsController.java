@@ -110,6 +110,13 @@ public class CustomersOrAppointmentsController implements Initializable {
     }
 
 
-
-
+    public void toReports(ActionEvent actionEvent) throws IOException {
+        LoginController.firstLogin = true;
+        Parent root = FXMLLoader.load(getClass().getResource("../View/Reports.fxml"));
+        Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+        Scene scene = new Scene(root, 800, 600);
+        stage.setTitle("Reports");
+        stage.setScene(scene);
+        stage.show();
+    }
 }

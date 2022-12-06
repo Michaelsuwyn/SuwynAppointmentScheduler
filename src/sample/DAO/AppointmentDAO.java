@@ -46,6 +46,15 @@ public class AppointmentDAO {
         return rs;
     }
 
+    public static ResultSet selectByContactID(int contactID) throws SQLException {
+        String sql = "SELECT * FROM appointments WHERE Contact_ID = ?";
+        PreparedStatement ps = JDBC.getConnection().prepareStatement(sql);
+        ps.setInt(1, contactID);
+        ResultSet rs = ps.executeQuery();
+        return rs;
+    }
+
+
     public static int deleteByID(int apptID) throws SQLException {
         String sql = "DELETE FROM appointments WHERE Appointment_ID = ?";
         PreparedStatement ps = JDBC.getConnection().prepareStatement(sql);
