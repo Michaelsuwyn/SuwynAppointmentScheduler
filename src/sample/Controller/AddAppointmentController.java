@@ -6,9 +6,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.stage.Stage;
 import sample.DAO.AppointmentDAO;
 import sample.Model.Appointment;
@@ -21,6 +19,7 @@ import java.text.ParseException;
 import java.time.*;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.TimeZone;
 
@@ -37,6 +36,7 @@ public class AddAppointmentController implements Initializable {
     public ComboBox startTimeCombo;
     public ComboBox endTimeCombo;
     public ArrayList<String> timeOptions = new ArrayList<String>();
+    public boolean withinTimeZone = true;
 
 
 
@@ -136,14 +136,35 @@ public class AddAppointmentController implements Initializable {
         String startUTC = convertToUTC(startDate);
         String endUTC = convertToUTC(endDate);
 
+        withinTimeZone(startUTC.substring(11,13), endUTC.substring(11,13));
 
-        AppointmentDAO.insertAppointment(title, description, location, type, startUTC, endUTC, customerID, userID,contactID);
 
-        Parent root = FXMLLoader.load(getClass().getResource("../View/AllAppointments.fxml"));
-        Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-        Scene scene = new Scene(root, 1100, 800);
-        stage.setTitle("Appointments");
-        stage.setScene(scene);
-        stage.show();
+        if(withinTimeZone == true){
+            AppointmentDAO.insertAppointment(title, description, location, type, startUTC, endUTC, customerID, userID,contactID);
+
+            Parent root = FXMLLoader.load(getClass().getResource("../View/AllAppointments.fxml"));
+            Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+            Scene scene = new Scene(root, 1100, 800);
+            stage.setTitle("Appointments");
+            stage.setScene(scene);
+            stage.show();
+        }
+
+    }
+
+    public void withinTimeZone(String startTimeChoice, String endTimeChoice){
+
+        int startTimeInt = Integer.parseInt(startTimeChoice.substring(0,2));
+        int endTimeInt =  Integer.parseInt(endTimeChoice.substring(0,2));
+
+        if((startTimeInt > 2 && startTimeInt < 13) || (endTimeInt > 3 && endTimeInt < 14)){
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Time needs to be within 8:00am - 10:00pm EST");
+            Optional<ButtonType> result = alert.showAndWait();
+            withinTimeZone = false;
+        }
+        else {
+            withinTimeZone = true;
+        }
+
     }
 }

@@ -200,6 +200,9 @@ public class AllAppointmentsController implements Initializable {
             allAppointmentsTable.setItems(thisWeekAppointmentsList);
             thisMonthAppointmentsList.clear();
         }
+        else {
+            thisWeekAppointmentsList.clear();
+        }
     }
 
     public void thisMonthMethod(ActionEvent actionEvent) {
@@ -221,6 +224,9 @@ public class AllAppointmentsController implements Initializable {
             }
             allAppointmentsTable.setItems(thisMonthAppointmentsList);
             thisWeekAppointmentsList.clear();
+        }
+        else {
+            thisMonthAppointmentsList.clear();
         }
     }
 
