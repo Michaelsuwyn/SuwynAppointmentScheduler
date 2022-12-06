@@ -59,7 +59,6 @@ public class CustomersOrAppointmentsController implements Initializable {
                 Date date = utcFormat.parse(userAppointments.getString(6));
                 String apptDate = localFormat.format(date);
                 Date apptFinal = sdf.parse(apptDate);
-                System.out.println("apptFinal: " + apptFinal + " fifteen Final: " + fifteenFinal + " now " + nowFinal);
                 if(apptFinal.before(fifteenFinal) && apptFinal.after(nowFinal)){
                     newAppt = true;
                     Alert apptAlert = new Alert(Alert.AlertType.INFORMATION, "Appointment within 15 Minutes \n Details: \n" + "Appointment ID - "+ userAppointments.getInt(1) + "\n" + apptFinal);

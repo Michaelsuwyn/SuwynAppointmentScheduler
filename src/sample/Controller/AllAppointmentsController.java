@@ -8,10 +8,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import sample.DAO.AppointmentDAO;
@@ -26,6 +23,7 @@ import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.*;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 public class AllAppointmentsController implements Initializable {
@@ -40,16 +38,23 @@ public class AllAppointmentsController implements Initializable {
     public TableColumn appCustomerID;
     public TableColumn appUserID;
     public ObservableList<Appointment> allAppointmentList = FXCollections.observableArrayList();
+    public ObservableList<Appointment> thisWeekAppointmentsList = FXCollections.observableArrayList();
+    public ObservableList<Appointment> thisMonthAppointmentsList = FXCollections.observableArrayList();
+
     public TableView allAppointmentsTable;
     public String contact;
     public SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     public ZoneId zoneID = ZoneId.systemDefault();
     public static Appointment selectedAppointment;
-
+    public RadioButton thisWeekID;
+    public RadioButton thisMonthID;
+    public RadioButton allApptsID;
+    public Label filterLabel;
 
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        allApptsID.setSelected(true);
 
         try {
             ResultSet rs = AppointmentDAO.selectAll();
@@ -174,6 +179,79 @@ public class AllAppointmentsController implements Initializable {
             Alert noSelection = new Alert(Alert.AlertType.ERROR, "Please select an appointment to edit");
             Optional<ButtonType> result = noSelection.showAndWait();
         }
+    }
+
+    public void thisWeekMethod(ActionEvent actionEvent) {
+        if(thisWeekID.isSelected() == true){
+            allApptsID.setSelected(false);
+            thisMonthID.setSelected(false);
+            LocalDate monday = getStartOfWeek();
+            LocalDate sunday = getEndOfWeek();
+            filterLabel.setText(monday.toString() + " - " + sunday.toString());
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+            for(int i = 0; i < allAppointmentList.size(); i++){
+                String startDateTime = allAppointmentList.get(i).getStartDate();
+                String startDate = startDateTime.substring(0,10);
+                LocalDate apptDate = LocalDate.parse(startDate, formatter);
+                if(apptDate.isBefore(sunday) && apptDate.isAfter(monday)){
+                    thisWeekAppointmentsList.add(allAppointmentList.get(i));
+                }
+            }
+            allAppointmentsTable.setItems(thisWeekAppointmentsList);
+            thisMonthAppointmentsList.clear();
+        }
+    }
+
+    public void thisMonthMethod(ActionEvent actionEvent) {
+        if(thisMonthID.isSelected() == true){
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+            thisWeekID.setSelected(false);
+            allApptsID.setSelected(false);
+            LocalDate today = LocalDate.now();
+            LocalDate startMonth = today.withDayOfMonth(1);
+            LocalDate endMonth = today.withDayOfMonth(today.getMonth().length(today.isLeapYear()));
+            filterLabel.setText(startMonth.toString() + " - " + endMonth.toString());
+            for(int i = 0; i < allAppointmentList.size(); i++){
+                String startDateTime = allAppointmentList.get(i).getStartDate();
+                String startDate = startDateTime.substring(0,10);
+                LocalDate apptDate = LocalDate.parse(startDate, formatter);
+                if(apptDate.isBefore(endMonth) && apptDate.isAfter(startMonth)){
+                    thisMonthAppointmentsList.add(allAppointmentList.get(i));
+                }
+            }
+            allAppointmentsTable.setItems(thisMonthAppointmentsList);
+            thisWeekAppointmentsList.clear();
+        }
+    }
+
+    public void allAppointmentsMethod(ActionEvent actionEvent) {
+        if(allApptsID.isSelected() == true){
+            thisWeekID.setSelected(false);
+            thisMonthID.setSelected(false);
+            filterLabel.setText("");
+            allAppointmentsTable.setItems(allAppointmentList);
+            thisWeekAppointmentsList.clear();
+            thisMonthAppointmentsList.clear();
+        }
+    }
+
+    public LocalDate getStartOfWeek(){
+        LocalDate today = LocalDate.now();
+        LocalDate monday = today;
+        while (monday.getDayOfWeek() != DayOfWeek.MONDAY) {
+            monday = monday.minusDays(1);
+        }
+        return monday;
+    }
+
+    public LocalDate getEndOfWeek(){
+        LocalDate today = LocalDate.now();
+
+        LocalDate sunday = today;
+        while (sunday.getDayOfWeek() != DayOfWeek.SUNDAY) {
+            sunday = sunday.plusDays(1);
+        }
+        return sunday;
     }
 }
 
