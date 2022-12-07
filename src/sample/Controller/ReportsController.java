@@ -65,7 +65,12 @@ public class ReportsController implements Initializable {
 
         }
         else if(reportSelected.toString().equals("Report of my choice")){
-            System.out.println("3");
+            Parent root = FXMLLoader.load(getClass().getResource("../View/MyReport.fxml"));
+            Stage stage = new Stage();
+            Scene scene = new Scene(root, 800, 500);
+            stage.setTitle("My Report");
+            stage.setScene(scene);
+            stage.show();
         }
     }
 }

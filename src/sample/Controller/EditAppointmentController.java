@@ -155,8 +155,6 @@ public class EditAppointmentController implements Initializable {
         int apptUserID = Integer.parseInt(editUserIDField.getText());
 
         withinTimeZone(utcStart.substring(11,13), utcEnd.substring(11,13));
-        System.out.println(utcStart);
-        System.out.println(utcEnd);
 
         if(withinTimeZone == true){
             AppointmentDAO.updateAppointment(apptID, apptTitle, apptDesc, apptLoc,apptType, utcStart, utcEnd, apptCustID, apptUserID, contactNum);

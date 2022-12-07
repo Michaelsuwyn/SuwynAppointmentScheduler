@@ -80,5 +80,12 @@ public class AppointmentDAO {
         return rowsAffected;
 
     }
+
+    public static ResultSet queryForMyReport() throws SQLException {
+        String sql = "SELECT Appointment_ID, Title, Description, Location, COUNT(*) FROM appointments GROUP BY Location;";
+        PreparedStatement ps = JDBC.getConnection().prepareStatement(sql);
+        ResultSet rs = ps.executeQuery();
+        return rs;
+    }
 }
 
