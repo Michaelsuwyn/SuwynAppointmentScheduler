@@ -53,7 +53,12 @@ public class ReportsController implements Initializable {
     public void reportSelection(ActionEvent actionEvent) throws IOException {
         Object reportSelected = reportCombo.getValue();
         if(reportSelected.toString().equals("Customer appointment type by Month")){
-            System.out.println("1");
+            Parent root = FXMLLoader.load(getClass().getResource("../View/MonthTypeReport.fxml"));
+            Stage stage = new Stage();
+            Scene scene = new Scene(root, 800, 500);
+            stage.setTitle("Appointments by Type and Month");
+            stage.setScene(scene);
+            stage.show();
         }
         else if(reportSelected.toString().equals("Schedule for each contact")){
             Parent root = FXMLLoader.load(getClass().getResource("../View/ContactReport.fxml"));
