@@ -27,6 +27,9 @@ import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 
+/**
+ * class controller for choice page
+ */
 public class CustomersOrAppointmentsController implements Initializable {
     public ZoneId zoneID = ZoneId.systemDefault();
     public SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -76,6 +79,11 @@ public class CustomersOrAppointmentsController implements Initializable {
         }
     }
 
+    /**
+     * navigation to customer page
+     * @param actionEvent
+     * @throws IOException
+     */
     public void toCustomers(ActionEvent actionEvent) throws IOException {
         LoginController.firstLogin = true;
         Parent root = FXMLLoader.load(getClass().getResource("../View/AllCustomers.fxml"));
@@ -87,6 +95,11 @@ public class CustomersOrAppointmentsController implements Initializable {
     }
 
 
+    /**
+     * navigation to appointment page
+     * @param actionEvent
+     * @throws IOException
+     */
     public void toAppointments(ActionEvent actionEvent) throws IOException {
         LoginController.firstLogin = true;
         Parent root = FXMLLoader.load(getClass().getResource("../View/AllAppointments.fxml"));
@@ -97,6 +110,13 @@ public class CustomersOrAppointmentsController implements Initializable {
         stage.show();
     }
 
+    /**
+     * convert datetime to string
+     * @param dt
+     * @param timezone
+     * @return
+     * @throws ParseException
+     */
     public static String convertDateTime(String dt, String timezone) throws ParseException {
         SimpleDateFormat sdfOriginal = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         sdfOriginal.setTimeZone(TimeZone.getTimeZone("UTC"));
@@ -110,6 +130,11 @@ public class CustomersOrAppointmentsController implements Initializable {
     }
 
 
+    /**
+     * navigation to reports page
+     * @param actionEvent
+     * @throws IOException
+     */
     public void toReports(ActionEvent actionEvent) throws IOException {
         LoginController.firstLogin = true;
         Parent root = FXMLLoader.load(getClass().getResource("../View/Reports.fxml"));

@@ -21,6 +21,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
+/**
+ * Controller for the add customer page
+ */
 public class AddCustomerController implements Initializable {
     public TextField nameField;
     public TextField addressField;
@@ -44,6 +47,11 @@ public class AddCustomerController implements Initializable {
 
     }
 
+    /**
+     * Provides country ID on country selection
+     * @param actionEvent
+     * @throws SQLException
+     */
     public void countrySelection(ActionEvent actionEvent) throws SQLException {
         stateCombo.getItems().clear();
         Object countrySelected = countryCombo.getValue();
@@ -62,6 +70,12 @@ public class AddCustomerController implements Initializable {
         }
     }
 
+    /**
+     * submits a new customer to database
+     * @param actionEvent
+     * @throws SQLException
+     * @throws IOException
+     */
     public void submitCustomer(ActionEvent actionEvent) throws SQLException, IOException {
         ResultSet firstLevelSet = FirstLevelDivisionDAO.getFirstLevelByName(stateCombo.getValue().toString());
         if(firstLevelSet.next()){
@@ -75,6 +89,11 @@ public class AddCustomerController implements Initializable {
         }
     }
 
+    /**
+     * navigation to all customers page
+     * @param actionEvent
+     * @throws IOException
+     */
     public void toAllCustomers(ActionEvent actionEvent) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("../View/AllCustomers.fxml"));
         Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();

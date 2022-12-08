@@ -16,6 +16,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
+/**
+ * class controller for month type report
+ */
 public class MonthTypeController implements Initializable {
     public TableColumn apptIDCol;
     public TableColumn titleCol;
@@ -65,6 +68,11 @@ public class MonthTypeController implements Initializable {
 
     }
 
+    /**
+     * function to convert numbers to month
+     * @param monthNum
+     * @return
+     */
     public String numToMonth(String monthNum){
         String month;
         switch (monthNum){
@@ -110,6 +118,10 @@ public class MonthTypeController implements Initializable {
         return month;
     }
 
+    /**
+     * function to filter by months
+     * @param actionEvent
+     */
     public void onMonthAction(ActionEvent actionEvent) {
         filteredList.clear();
        String monthChoice =  monthCombo.getValue().toString();
@@ -122,6 +134,10 @@ public class MonthTypeController implements Initializable {
         monthTypeTable.setItems(filteredList);
     }
 
+    /**
+     * function to filter by type
+     * @param actionEvent
+     */
     public void onTypeAction(ActionEvent actionEvent) {
         filteredList.clear();
         String monthChoice =  monthCombo.getValue().toString();

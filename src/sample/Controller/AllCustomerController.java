@@ -27,6 +27,9 @@ import java.sql.SQLException;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
+/**
+ * class which contains the code for all customer page
+ */
 public class AllCustomerController implements Initializable {
     public TableView allCustomers;
     public TableColumn customerIDField;
@@ -68,6 +71,11 @@ public class AllCustomerController implements Initializable {
         customerPhoneField.setCellValueFactory(new PropertyValueFactory<>("phone"));
     }
 
+    /**
+     * navigation to add customer page
+     * @param actionEvent
+     * @throws IOException
+     */
     public void toAddCustomer(ActionEvent actionEvent) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("../View/AddCustomer.fxml"));
         Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
@@ -77,6 +85,11 @@ public class AllCustomerController implements Initializable {
         stage.show();
     }
 
+    /**
+     * function to edit customer on selection
+     * @param actionEvent
+     * @throws IOException
+     */
     public void editCustomer(ActionEvent actionEvent) throws IOException {
         if(allCustomers.getSelectionModel().getSelectedItem() != null){
             selectedCustomer = (CustomerReceiver) allCustomers.getSelectionModel().getSelectedItem();
@@ -94,6 +107,12 @@ public class AllCustomerController implements Initializable {
         }
     }
 
+    /**
+     * function to delete customer on selection
+     * @param actionEvent
+     * @throws SQLException
+     * @throws IOException
+     */
     public void deleteCustomer(ActionEvent actionEvent) throws SQLException, IOException {
         if(allCustomers.getSelectionModel().getSelectedItem() != null){
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure you want to delete?");
@@ -128,6 +147,11 @@ public class AllCustomerController implements Initializable {
         }
     }
 
+    /**
+     * navigation to choice page
+     * @param actionEvent
+     * @throws IOException
+     */
     public void toAppOrCustomer(ActionEvent actionEvent) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("../View/CustomersOrAppointments.fxml"));
         Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();

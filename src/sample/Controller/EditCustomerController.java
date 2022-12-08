@@ -24,6 +24,9 @@ import java.sql.SQLException;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
+/**
+ * class that contains code for the edit customer page
+ */
 public class EditCustomerController implements Initializable {
     public TextField editCustomerPhone;
     public TextField editCustomerPostal;
@@ -89,6 +92,11 @@ public class EditCustomerController implements Initializable {
         editCustomerDivision.setValue(customer.getDivision());
     }
 
+    /**
+     * navigation to all customers page
+     * @param actionEvent
+     * @throws IOException
+     */
     public void toAllCustomers(ActionEvent actionEvent) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("../View/AllCustomers.fxml"));
         Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
@@ -98,6 +106,11 @@ public class EditCustomerController implements Initializable {
         stage.show();
     }
 
+    /**
+     * function that controls country selection combo box
+     * @param actionEvent
+     * @throws SQLException
+     */
     public void countrySelection(ActionEvent actionEvent) throws SQLException {
         editCustomerDivision.getItems().clear();
         editCustomerDivision.setValue("");
@@ -117,6 +130,12 @@ public class EditCustomerController implements Initializable {
         }
     }
 
+    /**
+     * function to update customer
+     * @param actionEvent
+     * @throws SQLException
+     * @throws IOException
+     */
     public void updateCustomer(ActionEvent actionEvent) throws SQLException, IOException {
         ResultSet firstLevelSet = FirstLevelDivisionDAO.getFirstLevelByName(editCustomerDivision.getValue().toString());
         if(firstLevelSet.next()){

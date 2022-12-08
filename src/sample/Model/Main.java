@@ -10,6 +10,9 @@ import sample.DAO.UserDAO;
 
 import java.sql.SQLException;
 
+/**
+ * Main method where the application starts
+ */
 public class Main extends Application {
 
     @Override

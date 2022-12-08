@@ -24,6 +24,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+//Class that contains the code for report option page
 public class ReportsController implements Initializable {
 
     public ComboBox reportCombo;
@@ -40,6 +41,7 @@ public class ReportsController implements Initializable {
 
     }
 
+    //Navigation to selection page
     public void toApptsOrCustomers(ActionEvent actionEvent) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("../View/CustomersOrAppointments.fxml"));
         Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
@@ -50,6 +52,7 @@ public class ReportsController implements Initializable {
     }
 
 
+    //Function to handle report selection
     public void reportSelection(ActionEvent actionEvent) throws IOException {
         Object reportSelected = reportCombo.getValue();
         if(reportSelected.toString().equals("Customer appointment type by Month")){

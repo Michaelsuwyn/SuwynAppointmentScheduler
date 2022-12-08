@@ -5,7 +5,16 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+/**
+ * First level division data access object
+ */
 public class FirstLevelDivisionDAO {
+    /**
+     * gets the first level divisions by country ID
+     * @param country_id
+     * @return
+     * @throws SQLException
+     */
     public static ResultSet getFirstLevelByCountry(int country_id) throws SQLException {
         String sql = "SELECT * FROM first_level_divisions WHERE Country_ID = ?";
         PreparedStatement ps = JDBC.getConnection().prepareStatement(sql);
@@ -14,6 +23,12 @@ public class FirstLevelDivisionDAO {
         return rs;
     }
 
+    /**
+     * gets the first level divisions by name
+     * @param name
+     * @return
+     * @throws SQLException
+     */
     public static ResultSet getFirstLevelByName(String name) throws SQLException {
         String sql = "SELECT * FROM first_level_divisions WHERE Division = ?";
         PreparedStatement ps = JDBC.getConnection().prepareStatement(sql);

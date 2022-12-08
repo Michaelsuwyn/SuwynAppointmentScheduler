@@ -1,5 +1,8 @@
 package sample.Model;
 
+/**
+ * Customer Receiver class
+ */
 public class CustomerReceiver {
     private int customerReceiverID;
     private String name;
@@ -8,6 +11,15 @@ public class CustomerReceiver {
     private String division;
     private String phone;
 
+    /**
+     * constructor for customer receiver
+     * @param customerReceiverID
+     * @param name
+     * @param address
+     * @param postal
+     * @param division
+     * @param phone
+     */
     public CustomerReceiver(int customerReceiverID, String name, String address, String postal, String division, String phone) {
         this.customerReceiverID = customerReceiverID;
         this.name = name;

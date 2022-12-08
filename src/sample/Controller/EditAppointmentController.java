@@ -24,6 +24,9 @@ import java.util.ArrayList;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
+/**
+ * class which contains code for the edit appointment controller
+ */
 public class EditAppointmentController implements Initializable {
     public TextField editApptIDField;
     public TextField editApptTitleField;
@@ -105,6 +108,11 @@ public class EditAppointmentController implements Initializable {
         editContactCombo.setValue(appointment.getContactID());
     }
 
+    /**
+     * navigation to all appointments page
+     * @param actionEvent
+     * @throws IOException
+     */
     public void toAllAppointments(ActionEvent actionEvent) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("../View/AllAppointments.fxml"));
         Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
@@ -114,6 +122,12 @@ public class EditAppointmentController implements Initializable {
         stage.show();
     }
 
+    /**
+     * function to convert string date to UTC
+     * @param dateTime
+     * @return
+     * @throws ParseException
+     */
     public String convertToUTC(String dateTime) throws ParseException {
         String DATE_FORMAT = "yyyy-MM-dd HH:mm:ss";
         LocalDateTime localDateTime = LocalDateTime.parse(dateTime, DateTimeFormatter.ofPattern(DATE_FORMAT));
@@ -123,6 +137,13 @@ public class EditAppointmentController implements Initializable {
         return finalUTCDateTime;
     }
 
+    /**
+     * function to update the appointment
+     * @param actionEvent
+     * @throws ParseException
+     * @throws SQLException
+     * @throws IOException
+     */
     public void updateAppointment(ActionEvent actionEvent) throws ParseException, SQLException, IOException {
         int contactNum = 0;
         String contactName = editContactCombo.getValue().toString();
@@ -170,6 +191,11 @@ public class EditAppointmentController implements Initializable {
 
     }
 
+    /**
+     * function that checks if start and end time are within range
+     * @param startTimeChoice
+     * @param endTimeChoice
+     */
     public void withinTimeZone(String startTimeChoice, String endTimeChoice){
 
         int startTimeInt = Integer.parseInt(startTimeChoice.substring(0,2));

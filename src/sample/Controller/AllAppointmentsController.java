@@ -26,6 +26,10 @@ import java.time.*;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 
+
+/**
+ * Class which contains the code relevant to the all appointments page ----> LAMBDA EXPRESSIONS UNDER thisWeekMethod and thisMonthMethod
+ */
 public class AllAppointmentsController implements Initializable {
     public TableColumn appID;
     public TableColumn appTitle;
@@ -105,6 +109,11 @@ public class AllAppointmentsController implements Initializable {
 
     }
 
+    /**
+     * navigation to selection page
+     * @param actionEvent
+     * @throws IOException
+     */
     public void toAppOrCustomer(ActionEvent actionEvent) throws IOException {
 
         Parent root = FXMLLoader.load(getClass().getResource("../View/CustomersOrAppointments.fxml"));
@@ -115,6 +124,13 @@ public class AllAppointmentsController implements Initializable {
         stage.show();
     }
 
+    /**
+     * function for converting string date to time within timezone
+     * @param dt
+     * @param timezone
+     * @return
+     * @throws ParseException
+     */
     public static String convertDateTime(String dt, String timezone) throws ParseException {
         SimpleDateFormat sdfOriginal = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         sdfOriginal.setTimeZone(TimeZone.getTimeZone("UTC"));
@@ -128,6 +144,11 @@ public class AllAppointmentsController implements Initializable {
     }
 
 
+    /**
+     * navigation to add appointment page
+     * @param actionEvent
+     * @throws IOException
+     */
     public void toAddAppointment(ActionEvent actionEvent) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("../View/AddAppointment.fxml"));
         Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
@@ -137,6 +158,12 @@ public class AllAppointmentsController implements Initializable {
         stage.show();
     }
 
+    /**
+     * function that will delete appointment on selection
+     * @param actionEvent
+     * @throws SQLException
+     * @throws IOException
+     */
     public void deleteAppt(ActionEvent actionEvent) throws SQLException, IOException {
         if(allAppointmentsTable.getSelectionModel().getSelectedItem() != null){
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure you want to delete?");
@@ -164,6 +191,11 @@ public class AllAppointmentsController implements Initializable {
         }
     }
 
+    /**
+     * function to edit appointment on selection
+     * @param actionEvent
+     * @throws IOException
+     */
     public void toEditAppointment(ActionEvent actionEvent) throws IOException {
         if(allAppointmentsTable.getSelectionModel().getSelectedItem() != null){
             selectedAppointment = (Appointment) allAppointmentsTable.getSelectionModel().getSelectedItem();
@@ -181,6 +213,10 @@ public class AllAppointmentsController implements Initializable {
         }
     }
 
+    /**
+     * function to filter appointments by week ---> LAMBDA expression here
+     * @param actionEvent
+     */
     public void thisWeekMethod(ActionEvent actionEvent) {
         if(thisWeekID.isSelected() == true){
             allApptsID.setSelected(false);
@@ -189,14 +225,17 @@ public class AllAppointmentsController implements Initializable {
             LocalDate sunday = getEndOfWeek();
             filterLabel.setText(monday.toString() + " - " + sunday.toString());
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-            for(int i = 0; i < allAppointmentList.size(); i++){
-                String startDateTime = allAppointmentList.get(i).getStartDate();
+
+            //Lambda Expression
+            allAppointmentList.forEach((a) -> {
+                String startDateTime = a.getStartDate();
                 String startDate = startDateTime.substring(0,10);
                 LocalDate apptDate = LocalDate.parse(startDate, formatter);
                 if(apptDate.isBefore(sunday) && apptDate.isAfter(monday)){
-                    thisWeekAppointmentsList.add(allAppointmentList.get(i));
+                    thisWeekAppointmentsList.add(a);
                 }
-            }
+            });
+
             allAppointmentsTable.setItems(thisWeekAppointmentsList);
             thisMonthAppointmentsList.clear();
         }
@@ -205,6 +244,10 @@ public class AllAppointmentsController implements Initializable {
         }
     }
 
+    /**
+     * function to filter appointments by month ---> LAMBDA expression here
+     * @param actionEvent
+     */
     public void thisMonthMethod(ActionEvent actionEvent) {
         if(thisMonthID.isSelected() == true){
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
@@ -214,14 +257,17 @@ public class AllAppointmentsController implements Initializable {
             LocalDate startMonth = today.withDayOfMonth(1);
             LocalDate endMonth = today.withDayOfMonth(today.getMonth().length(today.isLeapYear()));
             filterLabel.setText(startMonth.toString() + " - " + endMonth.toString());
-            for(int i = 0; i < allAppointmentList.size(); i++){
-                String startDateTime = allAppointmentList.get(i).getStartDate();
+
+            //Lambda Expression
+            allAppointmentList.forEach((a) -> {
+                String startDateTime = a.getStartDate();
                 String startDate = startDateTime.substring(0,10);
                 LocalDate apptDate = LocalDate.parse(startDate, formatter);
                 if(apptDate.isBefore(endMonth) && apptDate.isAfter(startMonth)){
-                    thisMonthAppointmentsList.add(allAppointmentList.get(i));
+                    thisMonthAppointmentsList.add(a);
                 }
-            }
+            });
+
             allAppointmentsTable.setItems(thisMonthAppointmentsList);
             thisWeekAppointmentsList.clear();
         }
@@ -230,6 +276,10 @@ public class AllAppointmentsController implements Initializable {
         }
     }
 
+    /**
+     * function to filter all appointments
+     * @param actionEvent
+     */
     public void allAppointmentsMethod(ActionEvent actionEvent) {
         if(allApptsID.isSelected() == true){
             thisWeekID.setSelected(false);
@@ -241,6 +291,10 @@ public class AllAppointmentsController implements Initializable {
         }
     }
 
+    /**
+     * function to get the start of week date
+     * @return
+     */
     public LocalDate getStartOfWeek(){
         LocalDate today = LocalDate.now();
         LocalDate monday = today;
@@ -250,6 +304,10 @@ public class AllAppointmentsController implements Initializable {
         return monday;
     }
 
+    /**
+     * function to get the end of the week
+     * @return
+     */
     public LocalDate getEndOfWeek(){
         LocalDate today = LocalDate.now();
 

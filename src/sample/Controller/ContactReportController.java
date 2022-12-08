@@ -22,6 +22,9 @@ import java.util.Date;
 import java.util.ResourceBundle;
 import java.util.TimeZone;
 
+/**
+ * class which contains code for the contact report
+ */
 public class ContactReportController implements Initializable {
     public TableColumn apptID;
     public TableColumn apptTitle;
@@ -71,6 +74,10 @@ public class ContactReportController implements Initializable {
         }
     }
 
+    /**
+     * generates the contact report
+     * @param contactID
+     */
     public void updateContactReport(int contactID){
         try {
             ResultSet rs = AppointmentDAO.selectByContactID(contactID);
@@ -102,6 +109,13 @@ public class ContactReportController implements Initializable {
         apptCustomerID.setCellValueFactory(new PropertyValueFactory<>("customerID"));
     }
 
+    /**
+     * function to convert datetime to string
+     * @param dt
+     * @param timezone
+     * @return
+     * @throws ParseException
+     */
     public static String convertDateTime(String dt, String timezone) throws ParseException {
         SimpleDateFormat sdfOriginal = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         sdfOriginal.setTimeZone(TimeZone.getTimeZone("UTC"));

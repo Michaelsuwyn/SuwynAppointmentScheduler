@@ -10,8 +10,15 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+/**
+ * Customer data access object
+ */
 public class CustomerDAO {
 
+    /**
+     * function to return all customers
+     * @throws SQLException
+     */
     public static void selectAll() throws SQLException {
         String sql = "SELECT * FROM customers";
         PreparedStatement ps = JDBC.getConnection().prepareStatement(sql);
@@ -21,6 +28,12 @@ public class CustomerDAO {
             System.out.println(userName);
         }
     }
+
+    /**
+     * returns customers with first level division
+     * @return
+     * @throws SQLException
+     */
     public static ResultSet selectAllCustomersWithFirstDivision() throws SQLException {
         ObservableList<Customer> allCustomers = FXCollections.observableArrayList();
         String sql = "SELECT * FROM customers LEFT JOIN first_level_divisions ON customers.Division_ID = first_level_divisions.Division_ID";
@@ -29,7 +42,17 @@ public class CustomerDAO {
         return rs;
     }
 
-    public static int insertCustomer(String customerName, String address, String postal, String phone, int divisionID) throws SQLException {
+    /**
+     * creates customer record on customer table
+     * @param customerName
+     * @param address
+     * @param postal
+     * @param phone
+     * @param divisionID
+     * @return
+     * @throws SQLException
+     */
+        public static int insertCustomer(String customerName, String address, String postal, String phone, int divisionID) throws SQLException {
         String sql = "INSERT INTO customers (Customer_Name, Address, Postal_Code, Phone, Division_ID) VALUES (?,?,?,?,?)";
         PreparedStatement ps = JDBC.getConnection().prepareStatement(sql);
         ps.setString(1, customerName);
@@ -41,6 +64,12 @@ public class CustomerDAO {
         return rowsAffected;
     }
 
+    /**
+     * deletes a customer record
+     * @param customerID
+     * @return
+     * @throws SQLException
+     */
     public static int deleteByID(int customerID) throws SQLException {
         String sql = "DELETE FROM customers WHERE Customer_ID = ?";
         PreparedStatement ps = JDBC.getConnection().prepareStatement(sql);
@@ -49,6 +78,17 @@ public class CustomerDAO {
         return rowsAffected;
     }
 
+    /**
+     * updates a customer record
+     * @param customerID
+     * @param customerName
+     * @param address
+     * @param postalCode
+     * @param phone
+     * @param divisionID
+     * @return
+     * @throws SQLException
+     */
     public static int updateCustomer(int customerID, String customerName, String address, String postalCode, String phone, int divisionID) throws SQLException {
         String sql = "UPDATE customers SET Customer_Name = ?, Address = ?, Postal_Code =?, Phone = ?, Division_ID = ? WHERE Customer_ID = ? ";
         PreparedStatement ps = JDBC.getConnection().prepareStatement(sql);

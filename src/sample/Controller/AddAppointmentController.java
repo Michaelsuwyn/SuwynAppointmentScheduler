@@ -23,6 +23,9 @@ import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.TimeZone;
 
+/**
+ * Controller for the add appointment page
+ */
 public class AddAppointmentController implements Initializable {
     public TextField titleText;
     public TextField descriptionText;
@@ -88,6 +91,11 @@ public class AddAppointmentController implements Initializable {
         );
     }
 
+    /**
+     * navigation to all appointments page
+     * @param actionEvent
+     * @throws IOException
+     */
     public void toAllAppointments(ActionEvent actionEvent) throws IOException {
 
         Parent root = FXMLLoader.load(getClass().getResource("../View/AllAppointments.fxml"));
@@ -98,6 +106,12 @@ public class AddAppointmentController implements Initializable {
         stage.show();
     }
 
+    /**
+     * converts a string date to UTC
+     * @param dateTime
+     * @return
+     * @throws ParseException
+     */
     public String convertToUTC(String dateTime) throws ParseException{
         String DATE_FORMAT = "yyyy-MM-dd HH:mm:ss";
         LocalDateTime localDateTime = LocalDateTime.parse(dateTime, DateTimeFormatter.ofPattern(DATE_FORMAT));
@@ -107,6 +121,13 @@ public class AddAppointmentController implements Initializable {
         return finalUTCDateTime;
     }
 
+    /**
+     * creates an appointment
+     * @param actionEvent
+     * @throws ParseException
+     * @throws SQLException
+     * @throws IOException
+     */
     public void submitAppointment(ActionEvent actionEvent) throws ParseException, SQLException, IOException {
         int contactID = 0;
         String title = titleText.getText().toString();
@@ -152,6 +173,11 @@ public class AddAppointmentController implements Initializable {
 
     }
 
+    /**
+     * checks to ensure start and end time are within frame
+     * @param startTimeChoice
+     * @param endTimeChoice
+     */
     public void withinTimeZone(String startTimeChoice, String endTimeChoice){
 
         int startTimeInt = Integer.parseInt(startTimeChoice.substring(0,2));

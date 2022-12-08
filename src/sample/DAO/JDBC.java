@@ -4,6 +4,9 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
+/**
+ * class for the JDBC connection
+ */
 public class JDBC {
  private static final String protocol = "jdbc";
      private static final String vendor = ":mysql:";
@@ -16,7 +19,10 @@ public class JDBC {
         private static Connection connection = null;  // Connection Interface
         private static PreparedStatement preparedStatement;
 
-         public static void makeConnection() {
+    /**
+     * creates the JDBC connection
+     */
+    public static void makeConnection() {
 
           try {
               Class.forName(driver); // Locate Driver

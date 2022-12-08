@@ -4,8 +4,15 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+/**
+ * USER data access object
+ */
 public class UserDAO {
 
+    /**
+     * selects all users
+     * @throws SQLException
+     */
     public static void selectAll() throws SQLException {
         String sql = "SELECT * FROM users";
         PreparedStatement ps = JDBC.getConnection().prepareStatement(sql);
@@ -16,6 +23,13 @@ public class UserDAO {
         }
     }
 
+    /**
+     * selects user where name and pass match
+     * @param name
+     * @param pass
+     * @return
+     * @throws SQLException
+     */
     public static boolean login(String name, String pass) throws SQLException {
         String sql = "SELECT * FROM users WHERE User_Name = ? AND Password = ?";
         PreparedStatement ps = JDBC.getConnection().prepareStatement(sql);
@@ -28,6 +42,13 @@ public class UserDAO {
         return false;
     }
 
+    /**
+     * selects user where name and pass match
+     * @param name
+     * @param pass
+     * @return
+     * @throws SQLException
+     */
     public static ResultSet loginData(String name, String pass) throws SQLException {
         String sql = "SELECT * FROM users WHERE User_Name = ? AND Password = ?";
         PreparedStatement ps = JDBC.getConnection().prepareStatement(sql);
