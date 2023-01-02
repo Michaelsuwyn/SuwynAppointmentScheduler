@@ -8,11 +8,9 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 import sample.DAO.AppointmentDAO;
 import sample.DAO.CustomerDAO;
@@ -40,6 +38,8 @@ public class AllCustomerController implements Initializable {
     public TableColumn customerPhoneField;
     public static CustomerReceiver selectedCustomer;
     public ObservableList<CustomerReceiver> allCustomerList = FXCollections.observableArrayList();
+    public ObservableList<CustomerReceiver> searchedCustomerList = FXCollections.observableArrayList();
+    public TextField searchField;
 
 
     @Override
@@ -159,5 +159,17 @@ public class AllCustomerController implements Initializable {
         stage.setTitle("Customers or Appointments");
         stage.setScene(scene);
         stage.show();
+    }
+
+    public void searchName(KeyEvent keyEvent) {
+        searchedCustomerList.clear();
+        String searchString = searchField.getText().toLowerCase();
+        for(int i = 0; i < allCustomerList.size(); i++){
+            String currentCustomer = allCustomerList.get(i).getName().toLowerCase();
+            if(currentCustomer.contains(searchString)){
+                searchedCustomerList.add(allCustomerList.get(i));
+            }
+        }
+        allCustomers.setItems(searchedCustomerList);
     }
 }

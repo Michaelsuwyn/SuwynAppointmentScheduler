@@ -13,15 +13,14 @@ import sample.Model.Appointment;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Time;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.*;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.Optional;
-import java.util.ResourceBundle;
-import java.util.TimeZone;
+import java.util.*;
 
 /**
  * Controller for the add appointment page
@@ -40,6 +39,7 @@ public class AddAppointmentController implements Initializable {
     public ComboBox endTimeCombo;
     public ArrayList<String> timeOptions = new ArrayList<String>();
     public boolean withinTimeZone = true;
+    public boolean apptConflict = false;
 
 
 
@@ -161,14 +161,42 @@ public class AddAppointmentController implements Initializable {
 
 
         if(withinTimeZone == true){
-            AppointmentDAO.insertAppointment(title, description, location, type, startUTC, endUTC, customerID, userID,contactID);
+            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            Date finalStartDate = formatter.parse(startUTC);
+            Date finalEndDate = formatter.parse(endUTC);
 
-            Parent root = FXMLLoader.load(getClass().getResource("../View/AllAppointments.fxml"));
-            Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-            Scene scene = new Scene(root, 1100, 800);
-            stage.setTitle("Appointments");
-            stage.setScene(scene);
-            stage.show();
+            ResultSet otherAppts = AppointmentDAO.selectByCustomerID(customerID);
+            while(otherAppts.next()){
+                String otherStart = otherAppts.getString(6);
+                String otherEnd = otherAppts.getString(7);
+                Date otherStartDate = formatter.parse(otherStart);
+                Date otherEndDate = formatter.parse(otherEnd);
+                System.out.println(finalStartDate.after(otherStartDate));
+                System.out.println(finalStartDate.before(otherEndDate));
+
+                if((finalStartDate.after(otherStartDate) && finalStartDate.before(otherEndDate)) || (finalEndDate.before(otherEndDate) && finalEndDate.after(otherStartDate)) || (finalStartDate.equals(otherStartDate) && finalEndDate.equals(otherEndDate)) || (finalStartDate.before(otherStartDate) && finalEndDate.equals(otherEndDate)) || (finalStartDate.equals(otherStartDate) && finalEndDate.after(otherEndDate))){
+                    apptConflict = true;
+                }
+                else {
+                    apptConflict = false;
+                }
+
+            }
+            if(apptConflict == true){
+                Alert alertAppt = new Alert(Alert.AlertType.ERROR, "Customer has overlapping appointment. Appointment must be outside other customer appointment windows.");
+                Optional<ButtonType> resultAppt = alertAppt.showAndWait();            }
+            else {
+                AppointmentDAO.insertAppointment(title, description, location, type, startUTC, endUTC, customerID, userID,contactID);
+
+                Parent root = FXMLLoader.load(getClass().getResource("../View/AllAppointments.fxml"));
+                Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+                Scene scene = new Scene(root, 1100, 800);
+                stage.setTitle("Appointments");
+                stage.setScene(scene);
+                stage.show();
+            }
+
+
         }
 
     }

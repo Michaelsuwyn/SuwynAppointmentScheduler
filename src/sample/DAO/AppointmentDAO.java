@@ -66,6 +66,15 @@ public class AppointmentDAO {
         return rs;
     }
 
+    public static ResultSet selectByCustomerIDExcludeApptID(int customerID, int apptID) throws SQLException {
+        String sql = "SELECT * FROM appointments WHERE Customer_ID = ? AND Appointment_ID != ?";
+        PreparedStatement ps = JDBC.getConnection().prepareStatement(sql);
+        ps.setInt(1, customerID);
+        ps.setInt(2, apptID);
+        ResultSet rs = ps.executeQuery();
+        return rs;
+    }
+
     /**
      * Selects all appointments by User ID
      * @param userID
