@@ -36,7 +36,7 @@ public class ReportsController implements Initializable {
         reportCombo.getItems().addAll(
                 "Customer appointment type by Month",
                 "Schedule for each contact",
-                "Report of my choice"
+                "Appointment Count"
         );
 
     }
@@ -72,11 +72,11 @@ public class ReportsController implements Initializable {
             stage.show();
 
         }
-        else if(reportSelected.toString().equals("Report of my choice")){
+        else if(reportSelected.toString().equals("Appointment Count")){
             Parent root = FXMLLoader.load(getClass().getResource("../View/MyReport.fxml"));
             Stage stage = new Stage();
             Scene scene = new Scene(root, 800, 500);
-            stage.setTitle("My Report");
+            stage.setTitle("Appointment Count");
             stage.setScene(scene);
             stage.show();
         }

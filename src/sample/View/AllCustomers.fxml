@@ -25,5 +25,6 @@
       <Button layoutX="20.0" layoutY="55.0" mnemonicParsing="false" onAction="#toAppOrCustomer" text="Back" />
       <TextField fx:id="searchField" layoutX="161.0" layoutY="55.0" onKeyReleased="#searchName" />
       <Label layoutX="78.0" layoutY="59.0" text="Search Name" />
+      <Button layoutX="149.0" layoutY="410.0" mnemonicParsing="false" onAction="#emailCustomer" text="Email Customer" />
    </children>
 </AnchorPane>

@@ -40,6 +40,8 @@ public class AllCustomerController implements Initializable {
     public ObservableList<CustomerReceiver> allCustomerList = FXCollections.observableArrayList();
     public ObservableList<CustomerReceiver> searchedCustomerList = FXCollections.observableArrayList();
     public TextField searchField;
+    public static Stage emailStage = new Stage();
+
 
 
     @Override
@@ -171,5 +173,14 @@ public class AllCustomerController implements Initializable {
             }
         }
         allCustomers.setItems(searchedCustomerList);
+    }
+
+    public void emailCustomer(ActionEvent actionEvent) throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("../View/EmailCustomer.fxml"));
+        Scene scene = new Scene(root, 800, 500);
+        emailStage.setTitle("Email Customer");
+        emailStage.setScene(scene);
+        emailStage.show();
+
     }
 }
